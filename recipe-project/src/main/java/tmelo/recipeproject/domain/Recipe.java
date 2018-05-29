@@ -4,15 +4,21 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="TB_RECIPES")
 public class Recipe {
 
 	@Id
@@ -26,13 +32,17 @@ public class Recipe {
 	private String url;
 	private String directions;
 	
+	@Enumerated(value=EnumType.STRING)
 	private Difficulty difficulty;
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	private Notes notes;
 
-	@ManyToMany(mappedBy="recipes")
-	private Category category;
+	@ManyToMany()
+	@JoinTable(name="TB_RECIPE_CATEGORY", 
+		joinColumns = @JoinColumn(name="recipe_id"),
+		inverseJoinColumns = @JoinColumn(name="category_id"))
+	private Set<Category> categories;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="recipe")
 	private Set<Ingredient> ingredients;
@@ -107,11 +117,11 @@ public class Recipe {
 		this.notes = notes;
 	}
 
-	public Category getCategory() {
-		return category;
+	public Set<Category> getCategories() {
+		return categories;
 	}
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
 	}
 	public Set<Ingredient> getIngredients() {
 		return ingredients;

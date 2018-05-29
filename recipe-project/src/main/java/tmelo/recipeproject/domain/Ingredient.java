@@ -7,8 +7,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="TB_INGREDIENTS")
 public class Ingredient {
 
 	@Id
@@ -17,6 +20,7 @@ public class Ingredient {
 	private String description;
 	private BigDecimal amount;
 	
+	@OneToOne
 	private UnitOfMeasure uom;
 	
 	@ManyToOne
