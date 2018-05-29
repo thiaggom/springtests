@@ -2,18 +2,21 @@ package tmelo.recipeproject.domain;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Recipe {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String description;
 	private Integer prepTime;
@@ -25,14 +28,16 @@ public class Recipe {
 	
 	private Difficulty difficulty;
 	
+	@OneToOne(cascade=CascadeType.ALL)
 	private Notes notes;
 
 	@ManyToMany(mappedBy="recipes")
 	private Category category;
 	
-	@OneToOne
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="recipe")
 	private Set<Ingredient> ingredients;
 	
+	@Lob
 	private Byte[] image;
 	
 	public Long getId() {

@@ -2,17 +2,26 @@ package tmelo.recipeproject.domain;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+@Entity
 public class Ingredient {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String description;
 	private BigDecimal amount;
+	
+	private UnitOfMeasure uom;
+	
+	@ManyToOne
+	private Recipe recipe;
+	
 	public Long getId() {
 		return id;
 	}
@@ -30,6 +39,18 @@ public class Ingredient {
 	}
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
+	}
+	public UnitOfMeasure getUom() {
+		return uom;
+	}
+	public void setUom(UnitOfMeasure uom) {
+		this.uom = uom;
+	}
+	public Recipe getRecipe() {
+		return recipe;
+	}
+	public void setRecipe(Recipe recipe) {
+		this.recipe = recipe;
 	}
 	@Override
 	public int hashCode() {
