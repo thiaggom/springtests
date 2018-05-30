@@ -62,11 +62,11 @@ public class DatabasePush implements ApplicationListener<ContextRefreshedEvent>{
 		UnitOfMeasure uomCup = optCup.get();
 		
 		//Pinch
-		Optional<UnitOfMeasure> optPinch = unitMesureRepo.findByDescription("Pinch");
-		if (!optPinch.isPresent()) {
-			throw new RuntimeException("Unit of Measure 'Pinch' is not found!");
-		}
-		UnitOfMeasure uomPinch = optPinch.get();
+//		Optional<UnitOfMeasure> optPinch = unitMesureRepo.findByDescription("Pinch");
+//		if (!optPinch.isPresent()) {
+//			throw new RuntimeException("Unit of Measure 'Pinch' is not found!");
+//		}
+//		UnitOfMeasure uomPinch = optPinch.get();
 		
 		//Ounce
 		Optional<UnitOfMeasure> optOunce = unitMesureRepo.findByDescription("Ounce");
@@ -107,11 +107,11 @@ public class DatabasePush implements ApplicationListener<ContextRefreshedEvent>{
 		Category catAmerican = optCatAmerican.get();
 		
 		//Italian
-		Optional<Category> optCatItalian = categoryRepo.findByCategoryName("Italian");
-		if (!optCatItalian.isPresent()) {
-			throw new RuntimeException("Category 'Italian' is not present!");
-		}
-		Category catItalian = optCatItalian.get();
+//		Optional<Category> optCatItalian = categoryRepo.findByCategoryName("Italian");
+//		if (!optCatItalian.isPresent()) {
+//			throw new RuntimeException("Category 'Italian' is not present!");
+//		}
+//		Category catItalian = optCatItalian.get();
 		
 		//Mexican
 		Optional<Category> optCatMexican = categoryRepo.findByCategoryName("Mexican");
@@ -121,11 +121,11 @@ public class DatabasePush implements ApplicationListener<ContextRefreshedEvent>{
 		Category catMexican = optCatMexican.get();
 		
 		//Fast Food
-		Optional<Category> optCatFastFood = categoryRepo.findByCategoryName("Fast Food");
-		if (!optCatFastFood.isPresent()) {
-			throw new RuntimeException("Category 'Fast Food' is not present!");
-		}
-		Category catFastFood = optCatFastFood.get();
+//		Optional<Category> optCatFastFood = categoryRepo.findByCategoryName("Fast Food");
+//		if (!optCatFastFood.isPresent()) {
+//			throw new RuntimeException("Category 'Fast Food' is not present!");
+//		}
+//		Category catFastFood = optCatFastFood.get();
 		
 
 		// Creating Guacamole Recipe...
@@ -158,7 +158,7 @@ public class DatabasePush implements ApplicationListener<ContextRefreshedEvent>{
                 "\n" +
                 "Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz4jvoun5ws");
         
-        guacamole.setNotes(guacNotes);
+        guacamole.addNotes(guacNotes);
         
         guacamole.addIngredient(new Ingredient("ripe avocados", new BigDecimal(2), uomOunce));
         guacamole.addIngredient(new Ingredient("Kosher salt", new BigDecimal(".5"), uomTeaspoon));
@@ -208,7 +208,7 @@ public class DatabasePush implements ApplicationListener<ContextRefreshedEvent>{
                 "\n" +
                 "Read more: http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/#ixzz4jvu7Q0MJ");
 
-        tacos.setNotes(tacoNotes);
+        tacos.addNotes(tacoNotes);
         
         tacos.setIngredients(new HashSet<>());
         tacos.addIngredient(new Ingredient("Ancho Chili Powder", new BigDecimal(2),uomTablespoon));
