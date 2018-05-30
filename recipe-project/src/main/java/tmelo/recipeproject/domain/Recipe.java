@@ -1,5 +1,7 @@
 package tmelo.recipeproject.domain;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,6 +19,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name="TB_RECIPES")
 public class Recipe {
@@ -30,6 +35,14 @@ public class Recipe {
 	private Integer servings;
 	private String source;
 	private String url;
+	
+	@CreationTimestamp()
+	private Date creationTime;
+	
+	@UpdateTimestamp
+	private Date lasUpdate;
+	
+	@Lob
 	private String directions;
 	
 	@Enumerated(value=EnumType.STRING)
@@ -42,10 +55,10 @@ public class Recipe {
 	@JoinTable(name="TB_RECIPE_CATEGORY", 
 		joinColumns = @JoinColumn(name="recipe_id"),
 		inverseJoinColumns = @JoinColumn(name="category_id"))
-	private Set<Category> categories;
+	private Set<Category> categories = new HashSet<>();
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="recipe")
-	private Set<Ingredient> ingredients;
+	private Set<Ingredient> ingredients = new HashSet<>();
 	
 	@Lob
 	private Byte[] image;
@@ -115,6 +128,7 @@ public class Recipe {
 	}
 	public void setNotes(Notes notes) {
 		this.notes = notes;
+		this.notes.setRecipe(this);
 	}
 
 	public Set<Category> getCategories() {
@@ -123,6 +137,12 @@ public class Recipe {
 	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}
+	
+	public void addIngredient(Ingredient ingredient) {
+		ingredient.setRecipe(this);
+		this.ingredients.add(ingredient);
+	}
+	
 	public Set<Ingredient> getIngredients() {
 		return ingredients;
 	}
