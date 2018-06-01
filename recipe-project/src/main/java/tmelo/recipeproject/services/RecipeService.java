@@ -4,12 +4,12 @@ import java.util.Set;
 
 import tmelo.recipeproject.domain.Recipe;
 
-public interface RecipesService {
+public interface RecipeService {
 
 	public Set<Recipe> getAllRecipes();
 	
 	public void saveRecipe(Recipe recipe);
 	
-	public void getRecipeById(Long id);
+	public Recipe getRecipeById(Long id);
 	
 }

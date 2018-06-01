@@ -1,11 +1,15 @@
 package tmelo.recipeproject.services;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.Before;
@@ -16,9 +20,9 @@ import org.mockito.MockitoAnnotations;
 import tmelo.recipeproject.domain.Recipe;
 import tmelo.recipeproject.repositories.RecipeRepository;
 
-public class RecipesServicesImplTest {
+public class RecipeServicesImplTest {
 
-	private RecipesServicesImpl recipeService;
+	private RecipeServicesImpl recipeService;
 	
 	@Mock
 	private RecipeRepository recipeRepo;
@@ -26,7 +30,22 @@ public class RecipesServicesImplTest {
 	@Before
 	public void init() throws Exception{
 		MockitoAnnotations.initMocks(this);
-		recipeService = new RecipesServicesImpl(recipeRepo);
+		recipeService = new RecipeServicesImpl(recipeRepo);
+	}
+	
+	@Test
+	public void getRecipeByIdTest() throws Exception {
+		Recipe rec = new Recipe();
+		rec.setId(1L);
+		Optional<Recipe> optRec = Optional.of(rec);
+		
+		when(recipeRepo.findById(anyLong())).thenReturn(optRec);
+		
+		Recipe returnedRecipe = recipeService.getRecipeById(1L);
+		
+		assertNotNull("Null recipe returned", returnedRecipe);
+		verify(recipeRepo, times(1)).findById(anyLong());
+		verify(recipeRepo, never()).findAll();
 	}
 	
 	@Test
@@ -43,6 +62,7 @@ public class RecipesServicesImplTest {
 		
 		// verifing if the RecipeRepository was called only once...
 		verify(recipeRepo, times(1)).findAll();
+		verify(recipeRepo, never()).findById(anyLong());
 	}
 	
 }

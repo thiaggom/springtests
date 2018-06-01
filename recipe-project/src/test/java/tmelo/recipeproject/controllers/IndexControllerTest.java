@@ -22,14 +22,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
 import tmelo.recipeproject.domain.Recipe;
-import tmelo.recipeproject.services.RecipesService;
+import tmelo.recipeproject.services.RecipeService;
 
 public class IndexControllerTest {
 
 	private IndexController indexController;
 	
 	@Mock
-	private RecipesService recipesService;
+	private RecipeService recipesService;
 	
 	@Mock
 	private Model model;

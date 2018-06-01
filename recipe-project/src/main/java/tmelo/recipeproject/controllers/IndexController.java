@@ -5,14 +5,14 @@ import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import tmelo.recipeproject.services.RecipesService;
+import tmelo.recipeproject.services.RecipeService;
 
 @Controller
 public class IndexController {
 
-	private final RecipesService recipesService;
+	private final RecipeService recipesService;
 	
-	public IndexController(RecipesService recipesService) {
+	public IndexController(RecipeService recipesService) {
 		this.recipesService = recipesService;
 	}
 

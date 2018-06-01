@@ -1,6 +1,7 @@
 package tmelo.recipeproject.services;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -11,11 +12,11 @@ import tmelo.recipeproject.repositories.RecipeRepository;
 
 @Slf4j
 @Service
-public class RecipesServicesImpl implements RecipesService{
+public class RecipeServicesImpl implements RecipeService{
 
 	private final RecipeRepository recipeRepository;
 
-	public RecipesServicesImpl(RecipeRepository recipeRepository) {
+	public RecipeServicesImpl(RecipeRepository recipeRepository) {
 		this.recipeRepository = recipeRepository;
 	}
 
@@ -35,9 +36,15 @@ public class RecipesServicesImpl implements RecipesService{
 	}
 
 	@Override
-	public void getRecipeById(Long id) {
-		// TODO Auto-generated method stub
+	public Recipe getRecipeById(Long id) {
 		
+		Optional<Recipe> optRecipe = recipeRepository.findById(id);
+		
+		if (!optRecipe.isPresent()) {
+			throw new RuntimeException("Recipe Not Found!");
+		}
+		
+		return optRecipe.get();
 	}
 	
 	
