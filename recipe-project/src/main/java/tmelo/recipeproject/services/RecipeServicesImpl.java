@@ -5,8 +5,12 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
+import tmelo.recipeproject.commands.RecipeCommand;
+import tmelo.recipeproject.converters.RecipeCommandToRecipe;
+import tmelo.recipeproject.converters.RecipeToRecipeCommand;
 import tmelo.recipeproject.domain.Recipe;
 import tmelo.recipeproject.repositories.RecipeRepository;
 
@@ -15,9 +19,14 @@ import tmelo.recipeproject.repositories.RecipeRepository;
 public class RecipeServicesImpl implements RecipeService{
 
 	private final RecipeRepository recipeRepository;
-
-	public RecipeServicesImpl(RecipeRepository recipeRepository) {
+	private final RecipeToRecipeCommand recipeToRecipeCommand;
+	private final RecipeCommandToRecipe recipeCommandToRecipe;
+	
+	public RecipeServicesImpl(RecipeRepository recipeRepository, RecipeToRecipeCommand recipeToRecipeCommand,
+			RecipeCommandToRecipe recipeCommandToRecipe) {
 		this.recipeRepository = recipeRepository;
+		this.recipeToRecipeCommand = recipeToRecipeCommand;
+		this.recipeCommandToRecipe = recipeCommandToRecipe;
 	}
 
 	@Override
@@ -46,6 +55,20 @@ public class RecipeServicesImpl implements RecipeService{
 		
 		return optRecipe.get();
 	}
+
+	@Override
+	@Transactional
+	public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
+		
+		Recipe detachedRecipe = recipeCommandToRecipe.convert(recipeCommand);
+		
+		Recipe savedRecipe = recipeRepository.save(detachedRecipe);
+		
+		log.debug("## saved recipe id: "+savedRecipe.getId());
+		
+		return recipeToRecipeCommand.convert(savedRecipe);
+	}
+
 	
 	
 }

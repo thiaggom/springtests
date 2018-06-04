@@ -2,6 +2,7 @@ package tmelo.recipeproject.controllers;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -40,7 +41,8 @@ public class RecipeControllerTest {
 
 		mock.perform(get("/recipe/show/1"))
 			.andExpect(status().isOk())
-			.andExpect(view().name("recipe/show"));
+			.andExpect(view().name("recipe/show"))
+			.andExpect(model().attributeExists("recipe"));
 
 	}
 

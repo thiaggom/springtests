@@ -17,6 +17,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import tmelo.recipeproject.converters.RecipeCommandToRecipe;
+import tmelo.recipeproject.converters.RecipeToRecipeCommand;
 import tmelo.recipeproject.domain.Recipe;
 import tmelo.recipeproject.repositories.RecipeRepository;
 
@@ -27,10 +29,16 @@ public class RecipeServicesImplTest {
 	@Mock
 	private RecipeRepository recipeRepo;
 	
+	@Mock
+	private RecipeToRecipeCommand recipeToRecipeCommand;
+	
+	@Mock
+	private RecipeCommandToRecipe recipeCommandToRecipe;
+	
 	@Before
 	public void init() throws Exception{
 		MockitoAnnotations.initMocks(this);
-		recipeService = new RecipeServicesImpl(recipeRepo);
+		recipeService = new RecipeServicesImpl(recipeRepo,recipeToRecipeCommand, recipeCommandToRecipe);
 	}
 	
 	@Test

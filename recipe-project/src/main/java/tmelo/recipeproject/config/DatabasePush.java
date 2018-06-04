@@ -172,6 +172,10 @@ public class DatabasePush implements ApplicationListener<ContextRefreshedEvent>{
         guacamole.getCategories().add(catAmerican);
         guacamole.getCategories().add(catMexican);
 
+        guacamole.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
+        guacamole.setServings(4);
+        guacamole.setSource("Simply Recipes");
+        
         //saving guacamole recipe in Database...
         recipeRepo.save(guacamole);
         
@@ -234,6 +238,10 @@ public class DatabasePush implements ApplicationListener<ContextRefreshedEvent>{
         tacos.setCategories(new HashSet<>());
         tacos.getCategories().add(catAmerican);
         tacos.getCategories().add(catMexican);
+
+        tacos.setUrl("https://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
+        tacos.setServings(6);
+        tacos.setSource("Simply Recipes");
 
         recipeRepo.save(tacos);
 	}

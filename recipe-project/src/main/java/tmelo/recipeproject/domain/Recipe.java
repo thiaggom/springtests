@@ -65,6 +65,8 @@ public class Recipe {
 	
 	@Lob
 	private Byte[] image;
+
+	public Recipe() {}
 	
 	public void addNotes(Notes notes) {
 		this.notes = notes;
