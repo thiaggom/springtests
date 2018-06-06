@@ -2,6 +2,7 @@ package tmelo.recipeproject.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -17,6 +18,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import tmelo.recipeproject.commands.RecipeCommand;
 import tmelo.recipeproject.converters.RecipeCommandToRecipe;
 import tmelo.recipeproject.converters.RecipeToRecipeCommand;
 import tmelo.recipeproject.domain.Recipe;
@@ -72,5 +74,40 @@ public class RecipeServicesImplTest {
 		verify(recipeRepo, times(1)).findAll();
 		verify(recipeRepo, never()).findById(anyLong());
 	}
+
+	@Test
+	public void testDeleteRecipeById() throws Exception {
+		
+		recipeService.deleteRecipeById(1L);
+		
+		verify(recipeRepo, times(1)).deleteById(anyLong());
+		
+	}
 	
+	@Test
+	public void findCommandByIdTest() throws Exception {
+		
+		// mock the repository result
+		Long lID = 1L;
+		String sDescription = "description";
+		Recipe recipe = new Recipe();
+		recipe.setId(lID);
+		recipe.setDescription(sDescription);
+		
+		Optional<Recipe> optRecipe = Optional.of(recipe);
+		
+		when(recipeRepo.findById(anyLong())).thenReturn(optRecipe);
+		
+		RecipeCommand command = new RecipeCommand();
+		command.setId(lID);
+		command.setDescription(sDescription);
+		when(recipeToRecipeCommand.convert(any())).thenReturn(command);
+		
+		RecipeCommand returnedCommand = recipeService.findCommandById(lID);
+		assertNotNull(returnedCommand);
+		assertEquals(lID, returnedCommand.getId());
+		assertEquals(sDescription, returnedCommand.getDescription());
+		verify(recipeRepo, times(1)).findById(anyLong());
+		verify(recipeRepo, never()).findAll();
+	}
 }

@@ -31,11 +31,10 @@ public class RecipeServicesImpl implements RecipeService{
 
 	@Override
 	public Set<Recipe> getAllRecipes() {
-		log.debug("## getAllRecipes - start ##");
 		HashSet<Recipe> recipes = new HashSet<>();
 		recipeRepository.findAll().iterator().forEachRemaining(recipes::add);
 		
-		log.debug("## getAllRecipes - end --> "+recipes);
+		log.debug("## getAllRecipes returned list of "+recipes.size());
 		return recipes;
 	}
 
@@ -68,6 +67,19 @@ public class RecipeServicesImpl implements RecipeService{
 		
 		return recipeToRecipeCommand.convert(savedRecipe);
 	}
+
+	@Override
+	@Transactional
+	public RecipeCommand findCommandById(Long id) {
+		log.debug("## findCommandById: "+id);
+		return recipeToRecipeCommand.convert(getRecipeById(id));
+	}
+
+	@Override
+	public void deleteRecipeById(Long id) {
+		recipeRepository.deleteById(id);
+	}
+
 
 	
 	

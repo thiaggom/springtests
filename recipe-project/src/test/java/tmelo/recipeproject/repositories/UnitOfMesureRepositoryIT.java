@@ -18,7 +18,7 @@ import tmelo.recipeproject.domain.UnitOfMeasure;
 public class UnitOfMesureRepositoryIT {
 
 	@Autowired
-	UnitOfMesureRepository uomRepo;
+	UnitOfMeasureRepository uomRepo;
 
 	@Test
 	public void findByDescription() throws Exception {

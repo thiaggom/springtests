@@ -22,9 +22,13 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude= {"categories","ingredients"})
 @Entity
 @Table(name="TB_RECIPES")
 public class Recipe {
@@ -66,8 +70,6 @@ public class Recipe {
 	@Lob
 	private Byte[] image;
 
-	public Recipe() {}
-	
 	public void addNotes(Notes notes) {
 		this.notes = notes;
 		notes.setRecipe(this);

@@ -16,17 +16,17 @@ import tmelo.recipeproject.domain.Recipe;
 import tmelo.recipeproject.domain.UnitOfMeasure;
 import tmelo.recipeproject.repositories.CategoryRepository;
 import tmelo.recipeproject.repositories.RecipeRepository;
-import tmelo.recipeproject.repositories.UnitOfMesureRepository;
+import tmelo.recipeproject.repositories.UnitOfMeasureRepository;
 
 @Component
 public class DatabasePush implements ApplicationListener<ContextRefreshedEvent>{
 
 	private RecipeRepository recipeRepo;
 	private CategoryRepository categoryRepo;
-	private UnitOfMesureRepository unitMesureRepo;
+	private UnitOfMeasureRepository unitMesureRepo;
 
 	public DatabasePush(RecipeRepository recipeRepo, CategoryRepository categoryRepo,
-			UnitOfMesureRepository unitMesureRepo) {
+			UnitOfMeasureRepository unitMesureRepo) {
 		super();
 		this.recipeRepo = recipeRepo;
 		this.categoryRepo = categoryRepo;
