@@ -22,6 +22,7 @@ import tmelo.recipeproject.commands.RecipeCommand;
 import tmelo.recipeproject.converters.RecipeCommandToRecipe;
 import tmelo.recipeproject.converters.RecipeToRecipeCommand;
 import tmelo.recipeproject.domain.Recipe;
+import tmelo.recipeproject.exceptions.NotFoundException;
 import tmelo.recipeproject.repositories.RecipeRepository;
 
 public class RecipeServicesImplTest {
@@ -41,6 +42,20 @@ public class RecipeServicesImplTest {
 	public void init() throws Exception{
 		MockitoAnnotations.initMocks(this);
 		recipeService = new RecipeServicesImpl(recipeRepo,recipeToRecipeCommand, recipeCommandToRecipe);
+	}
+	
+
+	@Test(expected=NotFoundException.class)
+	public void getRecipeByIdTestNotFound() throws Exception {
+		
+		Optional<Recipe> returned = Optional.empty();
+		
+		when(recipeRepo.findById(anyLong())).thenReturn(returned);
+		
+		recipeService.getRecipeById(1L);
+		
+		verify(recipeRepo, times(1)).findById(anyLong());
+		
 	}
 	
 	@Test

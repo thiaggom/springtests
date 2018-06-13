@@ -12,6 +12,7 @@ import tmelo.recipeproject.commands.RecipeCommand;
 import tmelo.recipeproject.converters.RecipeCommandToRecipe;
 import tmelo.recipeproject.converters.RecipeToRecipeCommand;
 import tmelo.recipeproject.domain.Recipe;
+import tmelo.recipeproject.exceptions.NotFoundException;
 import tmelo.recipeproject.repositories.RecipeRepository;
 
 @Slf4j
@@ -49,7 +50,7 @@ public class RecipeServicesImpl implements RecipeService{
 		Optional<Recipe> optRecipe = recipeRepository.findById(id);
 		
 		if (!optRecipe.isPresent()) {
-			throw new RuntimeException("Recipe Not Found!");
+			throw new NotFoundException("Recipe "+id+" was not Found!");
 		}
 		
 		return optRecipe.get();
