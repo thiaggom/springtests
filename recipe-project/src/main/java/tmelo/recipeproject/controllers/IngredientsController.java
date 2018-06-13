@@ -32,8 +32,7 @@ public class IngredientsController {
 		this.unitOfMeasureService = unitOfMeasureService;
 	}
 	
-	@GetMapping
-	@RequestMapping("/recipe/{id}/ingredients")
+	@GetMapping("/recipe/{id}/ingredients")
 	public String getIngredients(@PathVariable String id, Model model) {
 		log.debug("Getting ingredients of recipe: "+id);
 		
@@ -42,16 +41,14 @@ public class IngredientsController {
 		return "recipe/ingredients/list";
 	}
 
-    @GetMapping
-    @RequestMapping("recipe/{recipeId}/ingredients/{id}/show")
+	@GetMapping("recipe/{recipeId}/ingredients/{id}/show")
     public String showRecipeIngredient(@PathVariable String recipeId,
                                        @PathVariable String id, Model model){
         model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(id)));
         return "recipe/ingredients/show";
     }
 
-    @GetMapping
-    @RequestMapping("recipe/{recipeId}/ingredients/{id}/update")
+	@GetMapping("recipe/{recipeId}/ingredients/{id}/update")
     public String updateRecipeIngredient(@PathVariable String recipeId,
                                          @PathVariable String id, Model model){
         model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(id)));
@@ -70,8 +67,7 @@ public class IngredientsController {
         return "redirect:/recipe/" + savedCommand.getRecipeId() + "/ingredients/" + savedCommand.getId() + "/show";
     }
     
-    @GetMapping
-    @RequestMapping("recipe/{recipeId}/ingredients/new")
+    @GetMapping("recipe/{recipeId}/ingredients/new")
     public String newIngredient(@PathVariable String recipeId, Model model){
 
         //make sure we have a good id value
@@ -91,8 +87,7 @@ public class IngredientsController {
         return "recipe/ingredients/ingredientform";
     }
 
-    @GetMapping
-    @RequestMapping("recipe/{recipeId}/ingredients/{id}/delete")
+    @GetMapping("recipe/{recipeId}/ingredients/{id}/delete")
     public String deleteIngredient(@PathVariable String recipeId,
                                    @PathVariable String id){
 

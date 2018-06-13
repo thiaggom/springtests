@@ -20,14 +20,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import lombok.extern.slf4j.Slf4j;
 import tmelo.recipeproject.commands.RecipeCommand;
 import tmelo.recipeproject.domain.Recipe;
 import tmelo.recipeproject.exceptions.InvalidParametersException;
 import tmelo.recipeproject.exceptions.NotFoundException;
 import tmelo.recipeproject.services.RecipeService;
 
-@Slf4j
 public class RecipeControllerTest {
 
 	private RecipeController recipeController;
@@ -41,7 +39,10 @@ public class RecipeControllerTest {
 	public void init() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		this.recipeController = new RecipeController(recipeService);
-		this.mock = MockMvcBuilders.standaloneSetup(recipeController).build();
+		this.mock = MockMvcBuilders
+					.standaloneSetup(recipeController)
+					.setControllerAdvice(new ControllerExceptionHandler())
+					.build();
 	}
 
 	@Test
