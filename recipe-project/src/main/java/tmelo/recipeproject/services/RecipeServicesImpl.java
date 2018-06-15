@@ -62,6 +62,10 @@ public class RecipeServicesImpl implements RecipeService{
 		
 		Recipe detachedRecipe = recipeCommandToRecipe.convert(recipeCommand);
 		
+		// recuperando imagem já salva...
+		Recipe recImage = getRecipeById(recipeCommand.getId());
+		detachedRecipe.setImage(recImage.getImage());
+		
 		Recipe savedRecipe = recipeRepository.save(detachedRecipe);
 		
 		log.debug("## saved recipe id: "+savedRecipe.getId());
